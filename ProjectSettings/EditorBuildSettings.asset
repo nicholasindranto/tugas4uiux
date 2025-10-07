@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Horror/MainMenuHorror.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Horror/OptionHorror.unity
+    guid: 1db7f33dede67ba40b3414a887f02d11
+  - enabled: 1
+    path: Assets/Scenes/Horror/CreditHorror.unity
+    guid: afdd82dfec15247448b4625ddb4c47ad
+  - enabled: 1
+    path: Assets/Scenes/Horror/HUDHorror.unity
+    guid: a45a0a0fb90e11e41af786036b2e6f5b
   m_configObjects: {}
