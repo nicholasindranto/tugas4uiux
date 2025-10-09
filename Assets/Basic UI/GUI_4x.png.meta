@@ -144,13 +144,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_4x_6
+      name: A_framemaybe
       rect:
         serializedVersion: 2
         x: 96
-        y: 432
-        width: 16
-        height: 16
+        y: 352
+        width: 96
+        height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -4974,13 +4974,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_4x_266
+      name: a_itemframe2
       rect:
         serializedVersion: 2
         x: 448
-        y: 304
-        width: 16
-        height: 16
+        y: 256
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5058,13 +5058,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_4x_270
+      name: a_itemframe
       rect:
         serializedVersion: 2
         x: 512
-        y: 304
-        width: 16
-        height: 16
+        y: 256
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -6990,13 +6990,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_4x_362
+      name: a_itmframe2
       rect:
         serializedVersion: 2
         x: 384
-        y: 240
-        width: 16
-        height: 16
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7074,13 +7074,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_4x_366
+      name: a_itemframe1
       rect:
         serializedVersion: 2
         x: 448
-        y: 240
-        width: 16
-        height: 16
+        y: 192
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -13510,6 +13510,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      A_framemaybe: 15423220
       GUI_4x_1: -1752632276
       GUI_4x_10: -830847833
       GUI_4x_100: -1038636633
@@ -13692,12 +13693,10 @@ TextureImporter:
       GUI_4x_263: -1630255216
       GUI_4x_264: -256360204
       GUI_4x_265: -1560361893
-      GUI_4x_266: 1949512596
       GUI_4x_267: 159111374
       GUI_4x_268: -1959109165
       GUI_4x_269: -447692635
       GUI_4x_27: 490165995
-      GUI_4x_270: -976178673
       GUI_4x_271: -270689602
       GUI_4x_272: -1244948988
       GUI_4x_273: 934432572
@@ -13799,11 +13798,9 @@ TextureImporter:
       GUI_4x_36: 939411499
       GUI_4x_360: -764175959
       GUI_4x_361: -1062779253
-      GUI_4x_362: -576562910
       GUI_4x_363: 751113798
       GUI_4x_364: -2116692899
       GUI_4x_365: 874998108
-      GUI_4x_366: 274129785
       GUI_4x_367: 572228263
       GUI_4x_368: -834638358
       GUI_4x_369: -96459217
@@ -14058,7 +14055,6 @@ TextureImporter:
       GUI_4x_597: 923915519
       GUI_4x_598: 1199195295
       GUI_4x_599: 1032176216
-      GUI_4x_6: 15423220
       GUI_4x_60: 1885375872
       GUI_4x_600: -1838884712
       GUI_4x_601: -955467054
@@ -14190,6 +14186,10 @@ TextureImporter:
       a_frame4: -1904853574
       a_hp: -486293172
       a_hpfill: -774453739
+      a_itemframe: -976178673
+      a_itemframe1: 274129785
+      a_itemframe2: 1949512596
+      a_itmframe2: -576562910
       a_quest: -891252405
       a_shop: -998314049
       a_stamina: -29925324

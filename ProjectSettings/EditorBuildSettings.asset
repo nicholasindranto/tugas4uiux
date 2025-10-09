@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Horror/HUDHorror.unity
     guid: a45a0a0fb90e11e41af786036b2e6f5b
+  - enabled: 1
+    path: Assets/Scenes/Normal/Shop.unity
+    guid: 4667b8b81acec1d40b35cee7680e15c6
+  - enabled: 1
+    path: Assets/Scenes/Normal/HUD.unity
+    guid: ec043b79dc1c3f04cbe80a0ee17dbff2
   m_configObjects: {}
