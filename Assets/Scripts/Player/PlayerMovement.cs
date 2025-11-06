@@ -14,16 +14,26 @@ public class PlayerMovement : MonoBehaviour
     // kecepatan gerak
     public float moveSpeed = 5f;
 
-    // gravitasi
-    public float gravity = -9.8f;
+    // arah gerakannya
+    [SerializeField] private Vector3 moveDirection;
 
-    // kekuatan jump
-    public float jumpForce = 2f;
+    // reference ke input di inputactionnya
+    private Vector2 input;
 
-    // input dari input actionnya
-    [SerializeField] private Vector2 input;
+    // seberapa halus rotatenya
+    [SerializeField] private float smoothRotateTime = 0.1f;
 
-    [SerializeField] private Vector3 movement;
+    // kecepatan sekarang untuk rotatenya
+    private float currentVelocity;
+
+    // gravity bumi
+    private float gravity = -9.81f;
+
+    // modifier gravity bumi
+    [SerializeField] private float gravityModifier = 3.0f;
+
+    // kecepatan dari player turun kebawah
+    private float velocity;
 
     private void Awake()
     {
@@ -32,36 +42,69 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        characterController.Move(movement);
+        ApplyGravity();
+
+        ApplyRotation();
+
+        ApplyMovement();
+    }
+
+    private void ApplyRotation()
+    {
+        // pertama cek dulu, ada input nggak??
+        // dengan cara pakai sqrmagnitude
+        if (input.sqrMagnitude == 0) return;
+
+        // untuk rotasi, pakai atan2 untuk ngukur arah rotasinya
+        // lalu pakai euler buat nentuin arahnya
+        float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+
+        // setelah itu kita bikin smooth pakai smoothdampangle
+        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref currentVelocity, smoothRotateTime);
+
+        // ubah rotationnya
+        transform.rotation = Quaternion.Euler(0, angle, 0);
+    }
+
+    private void ApplyMovement()
+    {
+        // setelah di set arah gerakannya
+        // dikali dengan movespeed agar kita bisa atur kecepatan gerakannya 
+        // semau kita
+        // dikali dengan deltatime agar gerakannya sesuai dengan detik di 
+        // dunia nyata
+        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
 
     public void Move(InputAction.CallbackContext context)
     {
+        // ambil input dari inputaction
         input = context.ReadValue<Vector2>();
 
-        movement = new Vector3(input.x, 0, input.y) * moveSpeed * Time.deltaTime;
+        // lalu set arah gerakannya
+        moveDirection = new Vector3(input.x, 0, input.y);
     }
 
-    private void GravityPullControl()
+    private void ApplyGravity()
     {
-        // gravitasinya
-        // kalau nggak nyentuh tanah, maka tarik, kalau udah nyentuh
-        // maka nggak usah tarik
-        Vector3 gravityPull;
-        if (characterController.isGrounded) gravityPull = Vector3.zero;
-        else gravityPull = Vector3.up * gravity * Time.deltaTime;
+        // kalau lagi di tanah sama velocitynya kurang dari 0
+        // maka reset
+        if (characterController.isGrounded && velocity < 0.0f) velocity = -1.0f;
+        // tambahin kecepatan gravitasinya
+        else velocity += gravity * gravityModifier * Time.deltaTime;
 
-        characterController.Move(gravityPull);
+        // masukin velocity dari gravitynya ke movedirectionnya
+        moveDirection.y = velocity;
     }
 
-    private void JumpControl()
-    {
-        // kalau teken spasi, maka dia ngejump
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Vector3 jump = Vector3.up * jumpForce * Time.deltaTime;
+    // private void JumpControl()
+    // {
+    //     // kalau teken spasi, maka dia ngejump
+    //     if (Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         Vector3 jump = Vector3.up * jumpForce * Time.deltaTime;
 
-            characterController.Move(jump);
-        }
-    }
+    //         characterController.Move(jump);
+    //     }
+    // }
 }
