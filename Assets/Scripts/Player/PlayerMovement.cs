@@ -104,15 +104,40 @@ public class PlayerMovement : MonoBehaviour
         // ubah rotationnya di sumbu y
         // transform.rotation = Quaternion.Euler(0, angle, 0);
 
+        /*
+        logika :
+        1. hitung dulu arah gerakannya sesuai arah kamera sekarang
+        2. bikin quaternion yang ngarah ke arah tersebut
+        3. putar player ke arah yang udah dibikin quaternion
+        */
+
         // ambil arah rotasinya lalu masukin ke movedirectionnya
-        // kenapa kok dikali dengan vector3 inputactionnya?
-        // biar arah rotasinyya tu ngikutin arah kameranya
+        // disini kita kalikan input yang kita dapatkan dari inputaction
+        // dengan rotasi kamera saat ini tapi yang sumbu y
+        // kenapa kok dikali??
+        // biar kita bisa ngebikin player menghadap ke arah depannya kamera
+        // dengan rumus x = x * cosO + z * sinO
+        //              z = -x * sinO + z * consO
+        // otomatis arahnya tu nggak yang fix kaya 1, 0, 0 (kanan)
+        // atau 0, 0, 1 (depan) tapi malah jadi koma koma
+        // kaya 0.9, 0. -0.8 jadi sesuai dengan arah kamera saat ini
         moveDirection = Quaternion.Euler(0, mainCamera.transform.eulerAngles.y, 0) * new Vector3(input.x, 0, input.y);
 
         // set target rotationnya
+        // setelah dapet movedirectionnya berapa, kita bikin target derajatnya
+        // kenapa pakai lookrotation? karna fungsi ini tu otomatis bikin
+        // player menghadap ke arah movedirectionnya terhadap sumbu z alias
+        // vector3 up (0,0,1) nya
+        // kalau pakai atan2 sama smoothdampangle gimana? apakah sama aja?
+        // sama saja, pakai lookrotation jauh lebih simple
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
 
         // set rotasi playernya
+        // transform.rotation = dari berapa derajat
+        // targetRotation = ke berapa derajat
+        // rotationSpeed * Time.deltaTime = maksimal berapa derajat perubahannya
+        //                                  per framenya
+        // kenapa pakai rotatetowards? biar smooth rotasinya
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
@@ -122,6 +147,12 @@ public class PlayerMovement : MonoBehaviour
         float targetSpeed = movement.isSprinting ? movement.speed * movement.multiplier : movement.speed;
 
         // kita set kecepatan dia sekarang
+        // kenapa movetowards? biar halus kecepatan gerakannya
+        // ada percepatannya
+        // movement.currentSpeed = dari kecepatan berapa?
+        // targetSpeed = target kecepatannya berapa?
+        // movement.acceleration * Time.deltaTime = batas perubahan kecepatan
+        //                                          per framenya
         movement.currentSpeed = Mathf.MoveTowards(movement.currentSpeed, targetSpeed, movement.acceleration * Time.deltaTime);
 
         // setelah di set arah gerakannya

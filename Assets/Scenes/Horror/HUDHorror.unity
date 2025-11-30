@@ -925,10 +925,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2007687617}
+  deltaMouseDirection: {x: 0, y: 0}
   mouseSensitivity:
-    horizontal: 5
-    vertical: 5
-    invertHorizontal: 1
+    horizontal: 2
+    vertical: 2
+    invertHorizontal: 0
     invertVertical: 0
   cameraAngle:
     min: 10
@@ -4053,7 +4054,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45496d8e2140a24c851b93cad821098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   moveDirection: {x: 0, y: 0, z: 0}
   movement:
     speed: 5

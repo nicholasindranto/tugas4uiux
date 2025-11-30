@@ -18,8 +18,8 @@ public class CameraManager : MonoBehaviour
     // kecepatan kameranya sekarang
     // private Vector3 currentVelocity = Vector3.zero;
 
-    // ambil input dari inputactionnya
-    private Vector2 mouseDirection;
+    // ambil input dari inputactionnya untuk perubahan motion mouse verti horiznya
+    [SerializeField] private Vector2 deltaMouseDirection;
 
     // reference ke mouse sensitivitynya
     [SerializeField] private MouseSensitivity mouseSensitivity;
@@ -40,14 +40,16 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        // bikin rotasi yaw (rotasi y kamera) ditambahin mousedirection.x nya
+        // bikin rotasi yaw (rotasi y kamera) ditambahin deltaMousedirection.x nya
         // biar dia rotatenya ke kanan kiri
+        // kenapa kok ditambahin? kok nggak di assign?
+        // karna kita mau mengakumulasi pergerakan rotasi dari mouse
         // lalu dikali dengan sensitivitynya, biar bisa diubah sesuka hati
-        // kati deltatime biar konstan perubahannya
-        cameraRotation.yaw += mouseDirection.x * mouseSensitivity.horizontal * GetValueInvert(mouseSensitivity.invertHorizontal) * Time.deltaTime;
+        // kali deltatime biar konstan perubahannya
+        cameraRotation.yaw += deltaMouseDirection.x * mouseSensitivity.horizontal * GetValueInvert(mouseSensitivity.invertHorizontal);
 
         // ini yang atas sama bawahnya
-        cameraRotation.pitch += mouseDirection.y * mouseSensitivity.vertical * GetValueInvert(mouseSensitivity.invertVertical) * Time.deltaTime;
+        cameraRotation.pitch += deltaMouseDirection.y * mouseSensitivity.vertical * GetValueInvert(mouseSensitivity.invertVertical);
 
         // dibatasin angle atas bawahnya
         cameraRotation.pitch = Mathf.Clamp(cameraRotation.pitch, cameraAngle.min, cameraAngle.max);
@@ -55,11 +57,11 @@ public class CameraManager : MonoBehaviour
 
     public void Look(InputAction.CallbackContext context)
     {
-        // ambil dari inputactionnya set ke mousedirectionnya
-        mouseDirection = context.ReadValue<Vector2>();
+        // ambil dari inputactionnya set ke deltaMousedirectionnya
+        deltaMouseDirection = context.ReadValue<Vector2>();
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         // gerakin kameranya disini biar smooth
         // ambil dulu target position si kameranya dengan nambahin posisi
@@ -68,10 +70,14 @@ public class CameraManager : MonoBehaviour
 
         // gerakin pakai smoothdamp biar halus
         // penjelasaannya sama persis dengan yang rotation pakai
-        // smoothdampangle
+        // smoothdampangle bedanya kalau smoothdamp tu buat posisi
+        // smoothdampangle buat derajat rotasi
         // transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref currentVelocity, smoothTime);
 
         // rotasi kameranya pakai eulerangle
+        // kenapa kok pakai eulerangles? kok nggak quaternion.euler?
+        // karna kita udah punya derajat di pitch sama yaw nya
+        // jadi bakalan jauh lebih simple dan nggak kompleks kaya quaternion euler
         transform.eulerAngles = new Vector3(cameraRotation.pitch, cameraRotation.yaw, 0);
 
         // untuk posisinya tinggal kita kurangin dengan distancetoplayernya
@@ -81,7 +87,7 @@ public class CameraManager : MonoBehaviour
         transform.position = player.position - transform.forward * distanceToPlayer;
     }
 
-    private static int GetValueInvert(bool invert) => invert ? 1 : -1;
+    private static int GetValueInvert(bool invert) => invert ? -1 : 1;
 }
 
 // bikin struct yang bakalan nyimpen mouse sensitivitynya
